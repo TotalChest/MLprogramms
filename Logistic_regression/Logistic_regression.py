@@ -1,3 +1,5 @@
+#Prediction of passing to the university according to the scores of two exams
+
 import os
 import numpy as np
 from scipy import optimize
