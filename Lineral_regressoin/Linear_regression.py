@@ -40,10 +40,10 @@ def gradientDescentMulti(X, y, theta, alpha, num_iters):
     for i in range(num_iters):
         q = [0, 0, 0]
         for j in range(m):
-            for k in range(3):
+            for k in range(X.shape[1]):
                 q[k] += (np.dot(theta, X[j]) - y[j]) * X[j, k]
 
-        for l in range(3):
+        for l in range(X.shape[1]):
             theta[l] = theta[l] - (alpha / m) * q[l]
 
         J_history.append(computeCostMulti(X, y, theta))
