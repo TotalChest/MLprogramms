@@ -10,7 +10,9 @@ import numpy as np
 from scipy import optimize
 import functions
 
-src_file = 'data_set.txt'  # Файл с подготовленными векторами
+save = 1  # Сохранить веса в файл?
+save_file = 'save_weight.txt'   # Файл для сохранения весов
+src_file = 'data_set.txt'  # Файл с подготовленными векторами изображений
 size = (20, 20)  # Размер изображения
 layers = (400, 32, 16, 3)  # Архитектура нейросети
 options = {'maxiter': 500}  # Настройки оптимизатора
@@ -24,6 +26,7 @@ data = file.readlines()
 for i in data:
     Y.append(int(i.split(':')[1]))
     X.append(list(map(int, i.split(':')[2].split(','))))
+file.close()
 X = np.array(X)  # Векторы изображений по строкам (m, 400)
 Y = np.array(Y)  # Метки векторов (m)
 m = Y.size  # Размер обучающей выборки
@@ -44,6 +47,13 @@ costFunction = lambda p: functions.nnCostFunction(p, layers, X, Y, lambda_)
 # Минимизация функции стоимости
 res = optimize.minimize(costFunction, init_nn_params, jac=True, method='TNC', options=options)
 nn_params = res.x
+
+# Сохранение весов в файл
+if save:
+    save_file = open(save_file, 'w')
+    for i in range(len(nn_params)):
+        save_file.write(('%.10f' % nn_params[i]) + ('' if i == len(nn_params)-1 else ','))
+    save_file.close()
 
 # Восстановление матриц весов
 count = 0

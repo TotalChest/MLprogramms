@@ -16,9 +16,9 @@ def displayData(X, figsize=(20, 20)):
 
 
 # Прямое рпспространение
-def feedforward(inputs, Theta, count):
+def feedforward(inputs, Theta):
     x = inputs.copy()
-    for i in range(count):
+    for i in range(len(Theta)):
         x = sigmoid(np.dot(Theta[i], np.concatenate([np.ones(1), x])))
     return x
 
@@ -48,8 +48,8 @@ def nnCostFunction(nn_params, layers, X, Y, lambda_=0.0):
         Y1[i, Y[i]] = 1
 
     for i in range(m):
-        J += (-1 / m) * np.sum(np.log(feedforward(X[i, :], Theta, len(Theta))) * Y1[i, :] + np.log(
-            1 - feedforward(X[i, :], Theta, len(Theta))) * (1 - Y1[i, :]))
+        J += (-1 / m) * np.sum(np.log(feedforward(X[i, :], Theta)) * Y1[i, :] + np.log(
+            1 - feedforward(X[i, :], Theta)) * (1 - Y1[i, :]))
 
     for i in range(len(Theta)):
         J += (lambda_ / (2 * m)) * (np.sum(Theta[i][:, 1:] ** 2))
@@ -90,7 +90,7 @@ def randInitialize(In, Out, epsilon_init=1):
 
 # Классификация новых данных
 def predict(inputs, Theta):
-    o = feedforward(inputs, Theta, len(Theta))
+    o = feedforward(inputs, Theta)
     return np.argmax(o)
 
 
