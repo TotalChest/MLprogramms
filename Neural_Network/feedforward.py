@@ -40,7 +40,6 @@ def generate_vector(path, size=(20, 20)):
 # Загрузка весов
 save_file = open(save_file, 'r')
 nn_params = np.array(list(map(float, save_file.read().split(','))))
-print(nn_params)
 
 # Восстановление матриц весов
 count = 0
