@@ -1,2 +1,2 @@
 # MLprograms
-Machine Learning programms
+Machine Learning programs
